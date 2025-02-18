@@ -1,0 +1,129 @@
+#! /usr/bin/env sh
+
+# File to test
+EXP_SCRIPT="dna.py"
+
+# Text colors
+COLOR_REST="$(tput sgr0)"
+COLOR_RED="$(tput setaf 1)"
+COLOR_GREEN="$(tput setaf 2)"
+
+# Test counters
+NB_TEST_OK=0
+NB_TEST_TOTAL=0
+
+##################################################
+# Check if python is available
+##################################################
+pyapp=`which python`
+if [ "${pyapp:0:1}" == "/" ]
+then
+    python --version
+else
+    printf "Python not found\n"
+    exit
+fi
+
+##################################################
+# Check if the script is given
+##################################################
+GIVEN_SCRIPT=""
+if [ $# -eq 1 ]
+then
+    GIVEN_SCRIPT="${1}"
+else
+    printf "Give the script name in command line\n"
+    exit
+fi
+
+##################################################
+# Check if the script is correct
+##################################################
+if [ "${GIVEN_SCRIPT}" != "${EXP_SCRIPT}" ]
+then
+    printf "Script name is not correct, it should be: ${EXP_SCRIPT}\n"
+    exit
+fi
+
+##################################################
+# Check if the given script exists
+##################################################
+if [ ! -f "${EXP_SCRIPT}" ]
+then
+    printf "File not found: ${EXP_SCRIPT}\n"
+    exit
+fi
+
+
+##################################################
+# Test function
+##################################################
+run_test () {
+    TEST_NAME=$1
+    TEST_NUM=$2
+    TEST_PARAM=$3
+    TEST_IN=.test/${TEST_NUM}.in
+    TEST_EXP=.test/${TEST_NUM}.exp
+    TEST_OUT=".test/${TEST_NUM}_test.out"
+    TEST_DIFF=".test/${TEST_NUM}_test.diff"
+    python ${EXP_SCRIPT} ${TEST_PARAM} > ${TEST_OUT}
+    NB_LINES=`cat ${TEST_OUT} | wc -c`
+    if [ ${NB_LINES} -eq 0 ]
+    then
+        printf "\n"
+        printf "${TEST_NUM} ${COLOR_RED}\xE2\x9C\x97${COLOR_REST} ${TEST_NAME}\n"
+        printf "Your script prints nothing\n"
+    fi
+    diff ${TEST_EXP} ${TEST_OUT} > ${TEST_DIFF}
+    NB_DIFF=`cat ${TEST_DIFF} | wc -l`
+    NB_TEST_TOTAL=$((NB_TEST_TOTAL+1))
+    if [ ${NB_DIFF} -eq 0 ]
+    then
+        printf "${TEST_NUM} ${COLOR_GREEN}\xE2\x9C\x94${COLOR_REST} ${TEST_NAME}\n"
+        rm ${TEST_OUT}
+        rm ${TEST_DIFF}
+        NB_TEST_OK=$((NB_TEST_OK+1))
+    else
+        printf "\n"
+        printf "${TEST_NUM} ${COLOR_RED}\xE2\x9C\x97${COLOR_REST} ${TEST_NAME}\n"
+        printf "${COLOR_GREEN}Expected${COLOR_REST}\n"
+        grep "<" ${TEST_DIFF}
+        printf "${COLOR_RED}Given${COLOR_REST}\n"
+        grep ">" ${TEST_DIFF}
+        printf "\n"
+    fi
+}
+
+##################################################
+# Run tests
+##################################################
+run_test "DNA 01 - Bob" "01" "databases/small.csv sequences/1.txt"
+run_test "DNA 02 - No match" "02" "databases/small.csv sequences/2.txt"
+run_test "DNA 03 - No match" "03" "databases/small.csv sequences/3.txt"
+run_test "DNA 04 - Alice" "04" "databases/small.csv sequences/4.txt"
+run_test "DNA 05 - Lavender" "05" "databases/large.csv sequences/5.txt"
+run_test "DNA 06 - Luna" "06" "databases/large.csv sequences/6.txt"
+run_test "DNA 07 - Ron" "07" "databases/large.csv sequences/7.txt" 
+run_test "DNA 08 - Ginny" "08" "databases/large.csv sequences/8.txt"
+run_test "DNA 09 - Draco" "09" "databases/large.csv sequences/9.txt"
+run_test "DNA 10 - Albus" "10" "databases/large.csv sequences/10.txt"
+run_test "DNA 11 - Hermione" "11" "databases/large.csv sequences/11.txt"
+run_test "DNA 12 - Lily" "12" "databases/large.csv sequences/12.txt"
+run_test "DNA 13 - No match" "13" "databases/large.csv sequences/13.txt"
+run_test "DNA 14 - Severus" "14" "databases/large.csv sequences/14.txt"
+run_test "DNA 15 - Sirius" "15" "databases/large.csv sequences/15.txt"
+run_test "DNA 16 - No match" "16" "databases/large.csv sequences/16.txt"
+run_test "DNA 17 - Harry" "17" "databases/large.csv sequences/17.txt"
+run_test "DNA 18 - No match" "18" "databases/large.csv sequences/18.txt"
+run_test "DNA 19 - Fred" "19" "databases/large.csv sequences/19.txt"
+run_test "DNA 20 - No match" "20" "databases/large.csv sequences/20.txt"
+
+##################################################
+# Print Summary
+##################################################
+if [ ${NB_TEST_OK} -eq ${NB_TEST_TOTAL} ]
+then
+    printf "Validated: ${COLOR_GREEN}${NB_TEST_OK}/${NB_TEST_TOTAL}${COLOR_REST}\n"
+else
+    printf "Validated: ${COLOR_RED}${NB_TEST_OK}/${NB_TEST_TOTAL}${COLOR_REST}\n"
+fi
