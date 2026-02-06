@@ -54,7 +54,7 @@ Your task is to write a program that will take a sequence of DNA and a CSV file 
 
 - Your program should open the DNA sequence and read its contents into memory. DNA sequences are always one line uppercase text file.
 
-- For each of the STRs (from the first line of the CSV file), your program should compute the longest run of consecutive repeats of the STR in the DNA sequence to identify. Notice that we’ve defined a helper function for you, `longest_match`, which will do just that!
+- For each of the STRs (from the first line of the CSV file), your program should compute the longest run of consecutive repeats of the STR in the DNA sequence to identify. Notice that we’ve defined a helper function for you, `longest_match` in file `matcher.py`, which will do just that!
 - If the STR counts match exactly with any of the individuals in the CSV file, your program should print out the name of the matching individual.
     - You may assume that the STR counts will not match more than one individual.
     - If the STR counts do not match exactly with any of the individuals in the CSV file, your program should print `No match`.
