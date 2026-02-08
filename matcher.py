@@ -9,13 +9,11 @@
 def longest_match(sequence, subsequence):
     """Returns length of longest run of subsequence in sequence."""
 
-    # Initialize variables
+    # Initialize variable
     longest_run = 0
-    subsequence_length = len(subsequence)
-    sequence_length = len(sequence)
 
     # Check each character in sequence for most consecutive runs of subsequence
-    for i in range(sequence_length):
+    for i in range(len(sequence)):
 
         # Initialize count of consecutive runs
         count = 0
@@ -26,8 +24,8 @@ def longest_match(sequence, subsequence):
         while True:
 
             # Adjust substring start and end
-            start = i + count * subsequence_length
-            end = start + subsequence_length
+            start = i + count * len(subsequence)
+            end = start + len(subsequence)
 
             # If there is a match in the substring
             if sequence[start:end] == subsequence:
