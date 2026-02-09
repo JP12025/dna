@@ -87,7 +87,7 @@ with open("foo.csv", "r") as file:
 
 # When to Do it
 
-By Sunday, march 15, 2026 at 11:59 PM
+By Sunday, February 15, 2026 at 11:59 PM
 
 # How to Test
 
