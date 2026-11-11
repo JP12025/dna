@@ -1,7 +1,7 @@
 """
     Module matcher
     
-    Provides functions to calculate mathing on DNA sequences
+    Provides functions to calculate matching on DNA sequences
     This file has been written and distributed by Harvard 
     University under (CC BY-NC-SA 4.0) license.
 """

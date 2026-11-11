@@ -9,7 +9,7 @@ For this problem, you’ll extend the functionality of code provided in `dna.py`
 
 # Background
 
-DNA is really just a sequence of molecules called nucleotides. Each nucleotide of DNA contains one of four different bases: adenine (A), cytosine (C), guanine (G), or thymine (T). Some portions of this sequence (i.e., genome) are the same, or at least very similar, across almost all humans, but other portions of the sequence have a higher genetic diversity and thus vary more across the population.
+DNA is really just a sequence of molecules called nucleotides. Each nucleotide of DNA contains one of four different bases: adenine (A), cytosine (C), guanine (G), or thymine (T). Some portions of this sequence (i.e., the genome) are the same, or at least very similar, across almost all humans, but other portions of the sequence have a higher genetic diversity and thus vary more across the population.
 
 One place where DNA tends to have high genetic diversity is in Short Tandem Repeats (STRs). An STR is a short sequence of DNA bases that tends to repeat consecutively numerous times at specific locations inside of a person’s DNA. The number of times any particular STR repeats varies a lot among individuals. In the DNA samples below, for example, Alice has the STR `AGAT` repeated four times in her DNA, while Bob has the same STR repeated five times.
 
@@ -43,16 +43,16 @@ Your task is to write a program that will take a sequence of DNA and a CSV file 
 
 - The program should require:
   - the name of a CSV file containing the STR counts for a list of individuals
-  - the name of a text file containing the DNA sequence to identify. 
-  - Example : `python dna.py databases/small.csv sequences/1.txt`
-- If your program is executed with the incorrect number of command-line arguments, your program should print an error message of your choice (with print).
+  - the name of a text file containing the DNA sequence to identify.
+  - Example: `python dna.py databases/small.csv sequences/1.txt`
+- If your program is executed with the incorrect number of command-line arguments, your program should print an error message of your choice (with print) and stop (e.g. with `sys.exit()`).
 - If the correct number of arguments are provided, you may assume that the first argument is indeed the filename of a valid CSV file and that the second argument is the filename of a valid text file.
 
 - Your program should open the CSV file and read its contents into memory (use `import csv`).
     - You may assume that the first row of the CSV file will be the column names.
     - The first column will be the word name and the remaining columns will be the STR sequences themselves.
 
-- Your program should open the DNA sequence and read its contents into memory. DNA sequences are always one line uppercase text file.
+- Your program should open the DNA sequence and read its contents into memory. A DNA sequence file always contains a single line of uppercase text.
 
 - For each of the STRs (from the first line of the CSV file), your program should compute the longest run of consecutive repeats of the STR in the DNA sequence to identify. Notice that we’ve defined a helper function for you, `longest_match` in file `matcher.py`, which will do just that!
 - If the STR counts match exactly with any of the individuals in the CSV file, your program should print out the name of the matching individual.
@@ -82,20 +82,14 @@ with open("foo.csv", "r") as file:
 ```
 - While coding, print everything to see what happens.
 - The `open` and `read` functions might also prove useful for reading text files into memory.
-- Consider what data structures might be helpful for keeping tracking of information in your program. A `list` or a `dict` may prove useful.
+- Consider what data structures might be helpful for keeping track of information in your program. A `list` or a `dict` may prove useful.
 - Remember we’ve defined a function `longest_match` that, given both a DNA sequence and an STR as inputs, returns the maximum number of times that the STR repeats. You can then use that function in other parts of your program!
-
-# When to Do it
-
-By Sunday, February 15, 2026 at 11:59 PM
 
 # How to Test
 
-Two directories contain data for testing : `databases` and `sequences`.
+Two directories contain data for testing: `databases` and `sequences`.
+You can run your program on them yourself:
 
-Test your script with command `./check dna.py`
-
-Or run tests directly as follows:
 ```bash
 $ python dna.py databases/small.csv sequences/1.txt
 Bob
@@ -138,6 +132,27 @@ Fred
 $ python dna.py databases/large.csv sequences/20.txt
 No match
 ```
+
+Then test your program from the exercise folder with:
+
+```bash
+python test_dna.py
+```
+
+(use `python3` instead of `python` if that is how you run Python on your computer).
+
+The script runs your program as a user would: it gives the name of a database and the name of a sequence file to your program on the command line, then checks what your program prints.
+When a test fails, it explains what is wrong and gives the expected STR counts of the sequence, so that you can compare them with yours.
+After all the tests, it tries to find the probable cause of the wrong results.
+
+Don't forget it's important to test your program yourself too.
+Write small databases and sequences in files and check the answers of your program.
+What happens if:
+* the matching individual is the first one of the database? the last one?
+* an individual matches all the STRs but one?
+* the same STR appears several times in the sequence, but not always consecutively?
+* the database has other STRs than `small.csv`?
+* you forget a file name on the command line?
 
 # How to Submit
 
