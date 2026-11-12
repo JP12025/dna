@@ -59,6 +59,8 @@ Your task is to write a program that will take a sequence of DNA and a CSV file 
     - You may assume that the STR counts will not match more than one individual.
     - If the STR counts do not match exactly with any of the individuals in the CSV file, your program should print `No match`.
 
+![Demo of dna.py](dna.gif)
+
 # Hints
 
 - You may find Python’s `csv` module helpful for reading CSV files into memory. Of particular help might be `csv.DictReader`.
